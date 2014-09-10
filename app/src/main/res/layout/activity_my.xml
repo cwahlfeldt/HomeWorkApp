@@ -23,7 +23,6 @@ tools:context=".MyActivity">
         android:paddingRight="50dp"
         android:paddingTop="10dp"
         android:paddingBottom="10dp"
-        android:singleLine="false"
         android:focusable="true" />
 
 </RelativeLayout>

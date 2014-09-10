@@ -16,6 +16,8 @@ import org.w3c.dom.Text;
 
 public class MyActivity extends Activity {
 
+
+//  declares vars
     final Context context = this;
     private Button addClassBtn;
     private TextView classNameInput;
@@ -25,16 +27,18 @@ public class MyActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_my);
 
+//      initializes var
         addClassBtn = (Button) findViewById(R.id.classBtn);
         classNameInput = (TextView) findViewById(R.id.classNameInput);
 
         final LayoutInflater classInfo = getLayoutInflater();
 
-//    **adds a new layout**
+//      adds a new layout
 //      final LayoutInflater classTab = getLayoutInflater();
 
         // creates a alert box with a text view when button is clicked
-        addClassBtn.setOnClickListener(new View.OnClickListener() {
+        addClassBtn.setOnClickListener(
+            new View.OnClickListener() {
             @Override
             public void onClick(View view) {
 
@@ -48,11 +52,10 @@ public class MyActivity extends Activity {
 
                 diaBox.show();
 
-                addClassBtn.setVisibility(view.GONE);
-                addClassBtn.setVisibility(view.VISIBLE);
+                addClassBtn.setVisibility(View.GONE);
+                addClassBtn.setVisibility(View.VISIBLE);
             }
         });
-
     }
 
     @Override

@@ -17,7 +17,8 @@ import android.widget.LinearLayout;
 import android.view.ViewGroup.LayoutParams;
 import android.widget.Toast;
 
-public class MyActivity extends Activity {
+public class MyActivity extends Activity
+{
 
     // declares vars
     final Context CONTEXT = this;
@@ -35,6 +36,38 @@ public class MyActivity extends Activity {
             addClass();
 
         }
+    // creates an alert box with an EditText when button is clicked
+    // the EditText can add a title to a new layout
+    private void addClass(){
+
+        final LayoutInflater classInfo = getLayoutInflater();
+        final LayoutInflater classTab = getLayoutInflater();
+        addClassBtn = (Button) findViewById(R.id.classBtn);
+
+        addClassBtn.setOnClickListener(
+                new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+
+                        final AlertDialog.Builder builder = new AlertDialog.Builder(CONTEXT);
+
+                        final View dialogView = classInfo.inflate(R.layout.class_info, null);
+                        final View newClassLayout = classTab.inflate(R.layout.class_tab, null);
+
+                        //sets a custom view to builder
+                        builder.setView(dialogView);
+
+                        builder.setTitle("Add Class");
+
+                        AlertDialog diaBox = builder.create();
+
+                        //initializes custom view
+                        setDialogViews(dialogView, newClassLayout, diaBox);
+
+                        diaBox.show();
+                    }
+                });
+    }
 
     // initializes variables for custom view layout and adds a title to a new layout
     private void setDialogViews(final View dialogView, View newClassLayout, final AlertDialog diaBox){
@@ -75,36 +108,4 @@ public class MyActivity extends Activity {
                     });
         }
 
-    // creates an alert box with an EditText when button is clicked
-    // the EditText can add a title to a new layout
-    private void addClass(){
-
-            final LayoutInflater classInfo = getLayoutInflater();
-            final LayoutInflater classTab = getLayoutInflater();
-            addClassBtn = (Button) findViewById(R.id.classBtn);
-
-            addClassBtn.setOnClickListener(
-                    new View.OnClickListener() {
-                        @Override
-                        public void onClick(View view) {
-
-                            final AlertDialog.Builder builder = new AlertDialog.Builder(CONTEXT);
-
-                            final View dialogView = classInfo.inflate(R.layout.class_info, null);
-                            final View newClassLayout = classTab.inflate(R.layout.class_tab, null);
-
-                            //sets a custom view to builder
-                            builder.setView(dialogView);
-
-                            builder.setTitle("Add Class");
-
-                            AlertDialog diaBox = builder.create();
-
-                            //initializes custom view
-                            setDialogViews(dialogView, newClassLayout, diaBox);
-
-                            diaBox.show();
-                        }
-                    });
-        }
 }

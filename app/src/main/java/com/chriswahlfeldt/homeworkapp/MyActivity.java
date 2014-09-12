@@ -31,13 +31,58 @@ public class MyActivity extends Activity {
         protected void onCreate(Bundle savedInstanceState) {
             super.onCreate(savedInstanceState);
             setContentView(R.layout.activity_my);
-            // initializes var
+
+            addClass();
+
+        }
+
+    // initializes variables for custom view layout and adds a title to a new layout
+    private void setDialogViews(final View dialogView, View newClassLayout, final AlertDialog diaBox){
+            classNameInput = (EditText) dialogView.findViewById(R.id.classNameInput);
+            createBtn = (Button) dialogView.findViewById(R.id.createBtn);
+            classLayout = (LinearLayout) newClassLayout.findViewById(R.id.classTab);
+            titleView = (TextView) newClassLayout.findViewById(R.id.titleText);
+
+            //classNameInput is extracted to a variable
+            createBtn.setOnClickListener(
+                    new View.OnClickListener() {
+
+                        @Override
+                        public void onClick(View view) {
+                            String className = classNameInput.getText().toString();
+
+                            if (!className.equals(""))
+                            {
+                                titleView.setText(className);
+                                titleView.setGravity(Gravity.CENTER);
+                                titleView.setTextSize(40);
+
+                                // needed for creating a new view
+                                classLayout.removeAllViews();
+
+                                classLayout.addView(titleView);
+
+                                setContentView(classLayout);
+
+                                diaBox.dismiss();
+                            }
+                            else
+                            {
+                                Toast toast = Toast.makeText(CONTEXT, "Please add a name for your class", Toast.LENGTH_SHORT);
+                                toast.show();
+                            }
+                        }
+                    });
+        }
+
+    // creates an alert box with an EditText when button is clicked
+    // the EditText can add a title to a new layout
+    private void addClass(){
+
             final LayoutInflater classInfo = getLayoutInflater();
             final LayoutInflater classTab = getLayoutInflater();
             addClassBtn = (Button) findViewById(R.id.classBtn);
 
-            // creates a alert box with an EditText when button is clicked
-            // the EditText can add a title to a new layout
             addClassBtn.setOnClickListener(
                     new View.OnClickListener() {
                         @Override
@@ -59,44 +104,6 @@ public class MyActivity extends Activity {
                             setDialogViews(dialogView, newClassLayout, diaBox);
 
                             diaBox.show();
-                        }
-                    });
-        }
-
-        // initializes variables for custom view layout and adds a title to a new layout
-        private void setDialogViews(final View dialogView, View newClassLayout, final AlertDialog diaBox){
-            classNameInput = (EditText) dialogView.findViewById(R.id.classNameInput);
-            createBtn = (Button) dialogView.findViewById(R.id.createBtn);
-            classLayout = (LinearLayout) newClassLayout.findViewById(R.id.classTab);
-            titleView = (TextView) newClassLayout.findViewById(R.id.titleText);
-
-            //classNameInput is extracted to a variable
-            createBtn.setOnClickListener(
-                    new View.OnClickListener() {
-
-                        @Override
-                        public void onClick(View view) {
-                            String className = classNameInput.getText().toString();
-
-                            if (className != "")
-                            {
-                                titleView.setText(className);
-                                titleView.setGravity(Gravity.CENTER);
-                                titleView.setTextSize(40);
-
-                                // needed for creating a new view
-                                classLayout.removeAllViews();
-                                classLayout.addView(titleView);
-
-                                setContentView(classLayout);
-
-                                diaBox.dismiss();
-                            }
-                            else
-                            {
-                                Toast toast = Toast.makeText(CONTEXT, "Please add a name for your class ", Toast.LENGTH_LONG);
-                                toast.show();
-                            }
                         }
                     });
         }

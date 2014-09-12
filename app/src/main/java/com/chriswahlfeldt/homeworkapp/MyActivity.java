@@ -2,78 +2,76 @@ package com.chriswahlfeldt.homeworkapp;
 
 import android.app.Activity;
 import android.app.AlertDialog;
-import android.app.Dialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.os.Bundle;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
-import android.view.Menu;
-import android.view.MenuItem;
+import android.widget.EditText;
 import android.widget.TextView;
-
-import org.w3c.dom.Text;
+import android.widget.LinearLayout;
+import android.view.ViewGroup.LayoutParams;
 
 public class MyActivity extends Activity {
 
 
-//  declares vars
-    final Context context = this;
-    private Button addClassBtn;
-    private TextView classNameInput;
+    // declares vars
+    final Context CONTEXT = this;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_my);
 
-//      initializes var
-        addClassBtn = (Button) findViewById(R.id.classBtn);
-        classNameInput = (TextView) findViewById(R.id.classNameInput);
-
+        // initializes var
         final LayoutInflater classInfo = getLayoutInflater();
+        final View inflater = classInfo.inflate(R.layout.class_info, null);
+        final LinearLayout classTabLayout = new LinearLayout(this);
+        final Button addClassBtn = (Button) findViewById(R.id.classBtn);
+        final TextView tv = new TextView(this);
+        final EditText classNameInput = new EditText(this);
 
-//      adds a new layout
-//      final LayoutInflater classTab = getLayoutInflater();
 
         // creates a alert box with a text view when button is clicked
         addClassBtn.setOnClickListener(
-            new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
+                new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
 
-                AlertDialog.Builder builder = new AlertDialog.Builder(context);
+                        AlertDialog.Builder builder = new AlertDialog.Builder(CONTEXT);
 
-                builder.setView(classInfo.inflate(R.layout.class_info, null));
+                        builder.setView(classInfo.inflate(R.layout.class_info, null));
+                        builder.setTitle("Add Class");
 
-                builder.setTitle("Add Class");
+                        // makes a button that when pressed,
+                        // puts the text that you entered
+                        // into a string and creates a new textview
+                        // and puts it into a new layout
+                        builder.setPositiveButton("create", new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int whichButton)
+                            {
 
-                AlertDialog diaBox = builder.create();
+                                // no input is put here?
+                                String str = classNameInput.getText().toString();
 
-                diaBox.show();
+                                tv.setText(str);
+                                tv.setTextSize(25);
+                                tv.setGravity(Gravity.CENTER);
 
-                addClassBtn.setVisibility(View.GONE);
-                addClassBtn.setVisibility(View.VISIBLE);
-            }
+                                classTabLayout.setOrientation(LinearLayout.VERTICAL);
+//   causing problems  **         classTabLayout.setLayoutParams
+//   causing problems  **             (new LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT));
+                                classTabLayout.addView(tv);
+
+                            }
+                        });
+                        setContentView(classTabLayout);
+                        builder.show();
+                    }
+
         });
-    }
 
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.my, menu);
-        return true;
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
-        int id = item.getItemId();
-        if (id == R.id.action_settings) {
-            return true;
-        }
-        return super.onOptionsItemSelected(item);
     }
 }

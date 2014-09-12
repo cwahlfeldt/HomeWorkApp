@@ -1,9 +1,11 @@
 package com.chriswahlfeldt.homeworkapp;
 
+import android.annotation.TargetApi;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.os.Build;
 import android.os.Bundle;
 import android.text.Layout;
 import android.util.Log;
@@ -80,6 +82,7 @@ public class MyActivity extends Activity
             createBtn.setOnClickListener(
                     new View.OnClickListener() {
 
+                        @TargetApi(Build.VERSION_CODES.JELLY_BEAN_MR1)
                         @Override
                         public void onClick(View view) {
                             String className = classNameInput.getText().toString();
@@ -87,12 +90,10 @@ public class MyActivity extends Activity
                             if (!className.equals(""))
                             {
                                 titleView.setText(className);
-                                titleView.setGravity(Gravity.CENTER);
                                 titleView.setTextSize(40);
 
                                 // needed for creating a new view
                                 classLayout.removeAllViews();
-
                                 classLayout.addView(titleView);
 
                                 setContentView(classLayout);

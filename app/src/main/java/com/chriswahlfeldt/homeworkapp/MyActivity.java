@@ -5,6 +5,8 @@ import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.os.Bundle;
+import android.text.Layout;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -13,65 +15,89 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.LinearLayout;
 import android.view.ViewGroup.LayoutParams;
+import android.widget.Toast;
 
 public class MyActivity extends Activity {
 
-
     // declares vars
     final Context CONTEXT = this;
+    private Button addClassBtn;
+    private Button createBtn;
+    private LinearLayout classLayout;
+    private TextView titleView;
+    public EditText classNameInput;
 
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_my);
+        @Override
+        protected void onCreate(Bundle savedInstanceState) {
+            super.onCreate(savedInstanceState);
+            setContentView(R.layout.activity_my);
+            // initializes var
+            final LayoutInflater classInfo = getLayoutInflater();
+            final LayoutInflater classTab = getLayoutInflater();
+            addClassBtn = (Button) findViewById(R.id.classBtn);
 
-        // initializes var
-        final LayoutInflater classInfo = getLayoutInflater();
-        final View inflater = classInfo.inflate(R.layout.class_info, null);
-        final LinearLayout classTabLayout = new LinearLayout(this);
-        final Button addClassBtn = (Button) findViewById(R.id.classBtn);
-        final TextView tv = new TextView(this);
-        final EditText classNameInput = new EditText(this);
+            // creates a alert box with an EditText when button is clicked
+            // the EditText can add a title to a new layout
+            addClassBtn.setOnClickListener(
+                    new View.OnClickListener() {
+                        @Override
+                        public void onClick(View view) {
 
+                            final AlertDialog.Builder builder = new AlertDialog.Builder(CONTEXT);
 
-        // creates a alert box with a text view when button is clicked
-        addClassBtn.setOnClickListener(
-                new View.OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
+                            final View dialogView = classInfo.inflate(R.layout.class_info, null);
+                            final View newClassLayout = classTab.inflate(R.layout.class_tab, null);
 
-                        AlertDialog.Builder builder = new AlertDialog.Builder(CONTEXT);
+                            //sets a custom view to builder
+                            builder.setView(dialogView);
 
-                        builder.setView(classInfo.inflate(R.layout.class_info, null));
-                        builder.setTitle("Add Class");
+                            builder.setTitle("Add Class");
 
-                        // makes a button that when pressed,
-                        // puts the text that you entered
-                        // into a string and creates a new textview
-                        // and puts it into a new layout
-                        builder.setPositiveButton("create", new DialogInterface.OnClickListener() {
-                            public void onClick(DialogInterface dialog, int whichButton)
+                            AlertDialog diaBox = builder.create();
+
+                            //initializes custom view
+                            setDialogViews(dialogView, newClassLayout, diaBox);
+
+                            diaBox.show();
+                        }
+                    });
+        }
+
+        // initializes variables for custom view layout and adds a title to a new layout
+        private void setDialogViews(final View dialogView, View newClassLayout, final AlertDialog diaBox){
+            classNameInput = (EditText) dialogView.findViewById(R.id.classNameInput);
+            createBtn = (Button) dialogView.findViewById(R.id.createBtn);
+            classLayout = (LinearLayout) newClassLayout.findViewById(R.id.classTab);
+            titleView = (TextView) newClassLayout.findViewById(R.id.titleText);
+
+            //classNameInput is extracted to a variable
+            createBtn.setOnClickListener(
+                    new View.OnClickListener() {
+
+                        @Override
+                        public void onClick(View view) {
+                            String className = classNameInput.getText().toString();
+
+                            if (className != "")
                             {
+                                titleView.setText(className);
+                                titleView.setGravity(Gravity.CENTER);
+                                titleView.setTextSize(40);
 
-                                // no input is put here?
-                                String str = classNameInput.getText().toString();
+                                // needed for creating a new view
+                                classLayout.removeAllViews();
+                                classLayout.addView(titleView);
 
-                                tv.setText(str);
-                                tv.setTextSize(25);
-                                tv.setGravity(Gravity.CENTER);
+                                setContentView(classLayout);
 
-                                classTabLayout.setOrientation(LinearLayout.VERTICAL);
-//   causing problems  **         classTabLayout.setLayoutParams
-//   causing problems  **             (new LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT));
-                                classTabLayout.addView(tv);
-
+                                diaBox.dismiss();
                             }
-                        });
-                        setContentView(classTabLayout);
-                        builder.show();
-                    }
-
-        });
-
-    }
+                            else
+                            {
+                                Toast toast = Toast.makeText(CONTEXT, "Please add a name for your class ", Toast.LENGTH_LONG);
+                                toast.show();
+                            }
+                        }
+                    });
+        }
 }

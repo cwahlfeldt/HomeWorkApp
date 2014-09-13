@@ -1,114 +1,79 @@
 package com.chriswahlfeldt.homeworkapp;
 
-import android.annotation.TargetApi;
 import android.app.Activity;
 import android.app.AlertDialog;
+import android.app.Dialog;
 import android.content.Context;
-import android.content.DialogInterface;
-import android.os.Build;
 import android.os.Bundle;
-import android.text.Layout;
-import android.util.Log;
-import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
-import android.widget.EditText;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.widget.TextView;
-import android.widget.LinearLayout;
-import android.view.ViewGroup.LayoutParams;
-import android.widget.Toast;
 
-public class MyActivity extends Activity
-{
+import org.w3c.dom.Text;
 
-    // declares vars
-    final Context CONTEXT = this;
+public class MyActivity extends Activity {
+
+
+//  declares vars
+    final Context context = this;
     private Button addClassBtn;
-    private Button createBtn;
-    private LinearLayout classLayout;
-    private TextView titleView;
-    public EditText classNameInput;
+    private TextView classNameInput;
 
-        @Override
-        protected void onCreate(Bundle savedInstanceState) {
-            super.onCreate(savedInstanceState);
-            setContentView(R.layout.activity_my);
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_my);
 
-            addClass();
-
-        }
-    // creates an alert box with an EditText when button is clicked
-    // the EditText can add a title to a new layout
-    private void addClass(){
+//      initializes var
+        addClassBtn = (Button) findViewById(R.id.classBtn);
+        classNameInput = (TextView) findViewById(R.id.classNameInput);
 
         final LayoutInflater classInfo = getLayoutInflater();
-        final LayoutInflater classTab = getLayoutInflater();
-        addClassBtn = (Button) findViewById(R.id.classBtn);
 
+//      adds a new layout
+//      final LayoutInflater classTab = getLayoutInflater();
+
+        // creates a alert box with a text view when button is clicked
         addClassBtn.setOnClickListener(
-                new View.OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
+            new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
 
-                        final AlertDialog.Builder builder = new AlertDialog.Builder(CONTEXT);
+                AlertDialog.Builder builder = new AlertDialog.Builder(context);
 
-                        final View dialogView = classInfo.inflate(R.layout.class_info, null);
-                        final View newClassLayout = classTab.inflate(R.layout.class_tab, null);
+                builder.setView(classInfo.inflate(R.layout.class_info, null));
 
-                        //sets a custom view to builder
-                        builder.setView(dialogView);
+                builder.setTitle("Add Class");
 
-                        builder.setTitle("Add Class");
+                AlertDialog diaBox = builder.create();
 
-                        AlertDialog diaBox = builder.create();
+                diaBox.show();
 
-                        //initializes custom view
-                        setDialogViews(dialogView, newClassLayout, diaBox);
-
-                        diaBox.show();
-                    }
-                });
+                addClassBtn.setVisibility(View.GONE);
+                addClassBtn.setVisibility(View.VISIBLE);
+            }
+        });
     }
 
-    // initializes variables for custom view layout and adds a title to a new layout
-    private void setDialogViews(final View dialogView, View newClassLayout, final AlertDialog diaBox){
-            classNameInput = (EditText) dialogView.findViewById(R.id.classNameInput);
-            createBtn = (Button) dialogView.findViewById(R.id.createBtn);
-            classLayout = (LinearLayout) newClassLayout.findViewById(R.id.classTab);
-            titleView = (TextView) newClassLayout.findViewById(R.id.titleText);
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        // Inflate the menu; this adds items to the action bar if it is present.
+        getMenuInflater().inflate(R.menu.my, menu);
+        return true;
+    }
 
-            //classNameInput is extracted to a variable
-            createBtn.setOnClickListener(
-                    new View.OnClickListener() {
-
-                        @TargetApi(Build.VERSION_CODES.JELLY_BEAN_MR1)
-                        @Override
-                        public void onClick(View view) {
-                            String className = classNameInput.getText().toString();
-
-                            if (!className.equals(""))
-                            {
-                                titleView.setText(className);
-                                titleView.setTextSize(40);
-
-                                // needed for creating a new view
-                                classLayout.removeAllViews();
-                                classLayout.addView(titleView);
-
-                                setContentView(classLayout);
-
-                                diaBox.dismiss();
-                            }
-                            else
-                            {
-                                Toast toast = Toast.makeText(CONTEXT, "Please add a name for your class", Toast.LENGTH_SHORT);
-                                toast.show();
-                            }
-                        }
-                    });
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        // Handle action bar item clicks here. The action bar will
+        // automatically handle clicks on the Home/Up button, so long
+        // as you specify a parent activity in AndroidManifest.xml.
+        int id = item.getItemId();
+        if (id == R.id.action_settings) {
+            return true;
         }
-
-
-    // commit
+        return super.onOptionsItemSelected(item);
+    }
 }

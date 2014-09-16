@@ -4,22 +4,22 @@ import android.app.Activity;
 
 public class MyHomework extends Activity {
 
-    private String MyString1 = "", MyString2 = "";
+    private String title = null, description = null;
 
-    public String getString1() {
-        return MyString1;
+    public String getTitleTxt() {
+        return title;
     }
 
-    public String getString2() {
-        return MyString2;
+    public String getDescriptionTxt() {
+        return description;
     }
 
-    public void setString1(String thatString1) {
-        MyString1 = thatString1;
+    public void setTitleTxt(String thatString1) {
+        title = thatString1;
     }
 
-    public void setString2(String thatString2) {
-        MyString2 = thatString2;
+    public void setDescriptionTxt(String thatString2) {
+        description = thatString2;
     }
 
-}
+    }

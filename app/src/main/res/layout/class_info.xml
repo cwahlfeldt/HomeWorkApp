@@ -24,16 +24,16 @@
         android:paddingLeft="-10dp"
         android:paddingRight="-10dp" />
 
-    <Button
-        android:layout_alignParentStart="true"
-        android:layout_alignParentLeft="true"
-        android:layout_below="@+id/classNameInput"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/createBtn"
-        android:fontFamily="monospace"
-        android:textSize="23sp"
-        android:text="create"
-        android:focusable="true" />
+    <!--<Button-->
+        <!--android:layout_alignParentStart="true"-->
+        <!--android:layout_alignParentLeft="true"-->
+        <!--android:layout_below="@+id/classNameInput"-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:id="@+id/createBtn"-->
+        <!--android:fontFamily="monospace"-->
+        <!--android:textSize="23sp"-->
+        <!--android:text="create"-->
+        <!--android:focusable="true" />-->
 
     </RelativeLayout>

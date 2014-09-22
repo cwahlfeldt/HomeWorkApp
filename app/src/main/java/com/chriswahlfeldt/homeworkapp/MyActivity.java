@@ -2,6 +2,7 @@ package com.chriswahlfeldt.homeworkapp;
 
 
 import android.app.Activity;
+import java.util.*;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -20,55 +21,120 @@ import android.widget.LinearLayout;
 import android.view.ViewGroup.LayoutParams;
 import android.widget.Toast;
 
+import org.w3c.dom.Text;
+
 public class MyActivity extends Activity
 {
 
     // declares vars
     final Context CONTEXT = this;
-//    private LinearLayout classLayout;
-//    private TextView titleView;
-//    public EditText classNameInput;
+    int num1 = 25;
+    int counter = 0;
 
-        @Override
+    @Override
         protected void onCreate(Bundle savedInstanceState) {
             super.onCreate(savedInstanceState);
-            setContentView(R.layout.activity_my);
+            final LayoutInflater homeworkAdd = getLayoutInflater();
+            final View addHomeworkView = homeworkAdd.inflate(R.layout.add_homework, null);
+            final View activityMy = homeworkAdd.inflate(R.layout.activity_my, null);
 
-//            addClass();
-            addHomework();
+            setContentView(activityMy);
 
+            final List<View> txtView = new ArrayList<View>();
 
+            do {
+                addHomework(addHomeworkView, activityMy, txtView);
+                num1--;
+            } while (num1 != 0);
 
         }
 
-    private void addHomework()
+    private void addHomework(final View addHomeworkView, final View activityMy, final List<View> txtView)
     {
-        final LayoutInflater homeworkAdd = getLayoutInflater();
-        final View addHomeworkView = homeworkAdd.inflate(R.layout.add_homework, null);
 
         final EditText title = (EditText) addHomeworkView.findViewById(R.id.classTitleET);
         final EditText description = (EditText) addHomeworkView.findViewById(R.id.descriptionET);
 
-        Button addHWBtn = (Button) findViewById(R.id.HWBtn);
+        final RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT);
+        final RelativeLayout.LayoutParams params1 = new RelativeLayout.LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT);
+
+        final Button addHWBtn = (Button) activityMy.findViewById(R.id.HWBtn);
 
         addHWBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
 
                 setContentView(addHomeworkView);
+            }
+        });
+
+        final Button createBtn = (Button) addHomeworkView.findViewById(R.id.createBtn);
+
+        createBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
 
                 if (!title.getText().toString().equals(""))
                 {
+
+                    RelativeLayout relativeLayout = new RelativeLayout(getApplicationContext());
+                    RelativeLayout firstRelativeLayout = new RelativeLayout(getApplicationContext());
+
+                    TextView firstTxt = new TextView(CONTEXT);
+                    TextView txt = new TextView(CONTEXT);
+
+                    firstRelativeLayout.setId(0);
+                    relativeLayout.setId(counter);
+
+                    String temp = "";
+
+                    params.addRule(RelativeLayout.BELOW, addHWBtn.getId());
+                    params1.addRule(RelativeLayout.BELOW, relativeLayout.getId());
+
+                    if (counter == 0) temp = title.getText().toString() + "\n" + "\n" + description.getText().toString();
+
+                    firstTxt.setText(temp);
+                    firstTxt.setId(0);
+
+                    if (counter > 0) txt.setText(title.getText().toString() + "\n" + "\n" + description.getText().toString());
+                    txt.setId(counter);
+
+                    txtView.add(0, firstTxt);
+                    txtView.add(txt);
+
+                    firstRelativeLayout.setLayoutParams(params);
+                    firstRelativeLayout.addView(txtView.get(0));
+
+                    if (txt.getId() > 0)
+                    {
+                        relativeLayout.setLayoutParams(params1);
+                        relativeLayout.addView(txtView.get(counter));
+                    }
+                    if (counter == 0) counter++;
+
+                    RelativeLayout rootLayout = (RelativeLayout) activityMy.findViewById(R.id.mainRelLayout);
+                    rootLayout.addView(firstRelativeLayout);
+                    rootLayout.addView(relativeLayout);
+
+                    setContentView(activityMy);
+
+                    title.setText("");
+                    description.setText("");
 
                 }
                 else
                 {
                     Toast toast = Toast.makeText(CONTEXT, "Please add a name for your class", Toast.LENGTH_SHORT);
                     toast.show();
-                }
 
+                }
             }
         });
+    }
+
+    private void addToHomework()
+    {
+
     }
 
     //older dialog box way of doing things

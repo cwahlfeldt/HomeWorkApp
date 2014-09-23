@@ -1,6 +1,8 @@
 package com.chriswahlfeldt.homeworkapp;
 
         import android.content.Context;
+        import android.graphics.Color;
+        import android.graphics.Typeface;
         import android.view.LayoutInflater;
         import android.view.View;
         import android.view.ViewGroup;
@@ -39,7 +41,7 @@ public class MyHomework {
 
     public View getContentView_add_homework() { return homeworkView; }
 
-    public String getTitleTxt() { return title.getText().toString(); }
+    public TextView getTitle() { return title; }
 
     public String getDescriptionTxt() { return description.getText().toString(); }
 
@@ -49,26 +51,33 @@ public class MyHomework {
 
     // posts a new relative layout containing a txtview to the main layout on the activity_my.xml
     public void post(Context myContext){
+
+        // declares and sets vars specific to the post function
         TextView txt = new TextView(myContext);
         RelativeLayout postRelLayout = new RelativeLayout(myContext);
         List<RelativeLayout> postRelLayoutList = new ArrayList<RelativeLayout>();
-        RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+        RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
 
         postRelLayout.setId(counter++);
 
         params.addRule(RelativeLayout.BELOW, counter);
+        params.setMargins(15,20,15,20);
 
-        txt.setText(title.getText().toString() + "\n" + description.getText().toString() + "\n");
+        txt.setTextSize(20);
+        txt.setTypeface(null, (Typeface.BOLD));
+        txt.setPadding(40,30,30,30);
+
+        txt.setText(title.getText().toString() + " // " + description.getText().toString());
 
         postRelLayout.addView(txt);
         postRelLayoutList.add(postRelLayout);
 
         postRelLayout.setLayoutParams(params);
+        postRelLayout.setBackgroundColor(Color.GREEN);
 
         for (RelativeLayout aPostRelLayoutList : postRelLayoutList) {
 
             mainRelLayout.addView(aPostRelLayoutList);
-
         }
 
         title.setText("");

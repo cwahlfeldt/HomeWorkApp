@@ -1,6 +1,8 @@
 package com.chriswahlfeldt.homeworkapp;
 
 import android.app.Activity;
+import android.content.Context;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.EditText;
 
@@ -10,16 +12,20 @@ public class MyHomework extends Activity {
     private View homeworkView, activityView;
 
     // default constructor
-    public MyHomework() {
+    public MyHomework(Context myContext) {
 
-        homeworkView = getLayoutInflater().inflate(R.layout.add_homework, null);
-        activityView = getLayoutInflater().inflate(R.layout.activity_my, null);
+        // sets inflater to the context of MyActivity.java
+        LayoutInflater inflater = (LayoutInflater) myContext.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 
-        title.setText("");
+        homeworkView = inflater.inflate(R.layout.add_homework, null);
+        activityView = inflater.inflate(R.layout.activity_my, null);
+
         title = (EditText) homeworkView.findViewById(R.id.classTitleET);
+        title.setText("");
 
-        description.setText("");
         description = (EditText) homeworkView.findViewById(R.id.descriptionET);
+        title.setText("");
+
     }
 
     public View getContentView_activity_my() { return activityView; }

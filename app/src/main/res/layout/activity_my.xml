@@ -25,13 +25,5 @@ android:id="@+id/mainRelLayout" >
         android:layout_alignParentEnd="true"
         android:hint="+Homework"/>
 
-    <!--<RelativeLayout-->
-        <!--android:layout_width="wrap_content"-->
-        <!--android:layout_height="wrap_content"-->
-        <!--android:id="@+id/subRelLayout"-->
-        <!--android:clickable="false"-->
-        <!--android:layout_marginTop="63dp">-->
-    <!--</RelativeLayout>-->
-
 </RelativeLayout>
 

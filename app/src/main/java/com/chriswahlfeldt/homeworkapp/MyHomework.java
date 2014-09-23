@@ -1,25 +1,36 @@
 package com.chriswahlfeldt.homeworkapp;
 
 import android.app.Activity;
+import android.view.View;
+import android.widget.EditText;
 
 public class MyHomework extends Activity {
 
-    private String title = null, description = null;
+    private EditText title, description;
+    private View homeworkView, activityView;
 
-    public String getTitleTxt() {
-        return title;
+    // default constructor
+    public MyHomework() {
+
+        homeworkView = getLayoutInflater().inflate(R.layout.add_homework, null);
+        activityView = getLayoutInflater().inflate(R.layout.activity_my, null);
+
+        title.setText("");
+        title = (EditText) homeworkView.findViewById(R.id.classTitleET);
+
+        description.setText("");
+        description = (EditText) homeworkView.findViewById(R.id.descriptionET);
     }
 
-    public String getDescriptionTxt() {
-        return description;
-    }
+    public View getContentView_activity_my() { return activityView; }
 
-    public void setTitleTxt(String thatString1) {
-        title = thatString1;
-    }
+    public View getContentView_add_homework() { return homeworkView; }
 
-    public void setDescriptionTxt(String thatString2) {
-        description = thatString2;
-    }
+    public String getTitleTxt() { return title.getText().toString(); }
 
-    }
+    public String getDescriptionTxt() { return description.getText().toString(); }
+
+    public void setTitleTxt(String thatString) { title.setText(thatString); }
+
+    public void setDescriptionTxt(String thatString) { title.setText(thatString); }
+}

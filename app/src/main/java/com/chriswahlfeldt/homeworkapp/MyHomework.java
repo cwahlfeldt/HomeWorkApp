@@ -1,17 +1,23 @@
 package com.chriswahlfeldt.homeworkapp;
 
-import android.app.Activity;
-import android.content.Context;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.widget.EditText;
+        import android.content.Context;
+        import android.view.LayoutInflater;
+        import android.view.View;
+        import android.view.ViewGroup;
+        import android.widget.EditText;
+        import android.widget.RelativeLayout;
+        import android.widget.TextView;
+        import java.util.ArrayList;
+        import java.util.List;
 
-public class MyHomework extends Activity {
+public class MyHomework {
 
     private EditText title, description;
     private View homeworkView, activityView;
+    private RelativeLayout mainRelLayout;
+    private int counter;
 
-    // default constructor
+    // default "constructor"
     public MyHomework(Context myContext) {
 
         // sets inflater to the context of MyActivity.java
@@ -19,6 +25,7 @@ public class MyHomework extends Activity {
 
         homeworkView = inflater.inflate(R.layout.add_homework, null);
         activityView = inflater.inflate(R.layout.activity_my, null);
+        mainRelLayout = (RelativeLayout) activityView.findViewById(R.id.mainLayout);
 
         title = (EditText) homeworkView.findViewById(R.id.classTitleET);
         title.setText("");
@@ -39,4 +46,32 @@ public class MyHomework extends Activity {
     public void setTitleTxt(String thatString) { title.setText(thatString); }
 
     public void setDescriptionTxt(String thatString) { title.setText(thatString); }
+
+    // posts a new relative layout containing a txtview to the main layout on the activity_my.xml
+    public void post(Context myContext){
+        TextView txt = new TextView(myContext);
+        RelativeLayout postRelLayout = new RelativeLayout(myContext);
+        List<RelativeLayout> postRelLayoutList = new ArrayList<RelativeLayout>();
+        RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+
+        postRelLayout.setId(counter++);
+
+        params.addRule(RelativeLayout.BELOW, counter);
+
+        txt.setText(title.getText().toString() + "\n" + description.getText().toString() + "\n");
+
+        postRelLayout.addView(txt);
+        postRelLayoutList.add(postRelLayout);
+
+        postRelLayout.setLayoutParams(params);
+
+        for (RelativeLayout aPostRelLayoutList : postRelLayoutList) {
+
+            mainRelLayout.addView(aPostRelLayoutList);
+
+        }
+
+        title.setText("");
+        description.setText("");
+    }
 }

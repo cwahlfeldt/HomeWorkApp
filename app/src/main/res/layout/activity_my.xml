@@ -7,10 +7,10 @@ android:paddingRight="@dimen/activity_horizontal_margin"
 android:paddingTop="@dimen/activity_vertical_margin"
 android:paddingBottom="@dimen/activity_vertical_margin"
 tools:context=".MyActivity"
-android:id="@+id/mainRelLayout" >
+android:id="@+id/mainRelLayout">
 
     <Button
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/HWBtn"
         android:textSize="25sp"
@@ -18,12 +18,26 @@ android:id="@+id/mainRelLayout" >
         android:paddingRight="50dp"
         android:paddingTop="10dp"
         android:paddingBottom="10dp"
+        android:hint="+Homework"
         android:layout_alignParentTop="true"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
         android:layout_alignParentRight="true"
         android:layout_alignParentEnd="true"
-        android:hint="+Homework"/>
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true" />
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/HWBtn">
+
+    <RelativeLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/mainLayout">
+    </RelativeLayout>
+
+    </ScrollView>
+
 
 </RelativeLayout>
 

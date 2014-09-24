@@ -37,9 +37,11 @@ public class MyActivity extends Activity
                     new View.OnClickListener() {
                         @Override
                         public void onClick(View view) {
-                            myHw.post(context);
-                            setContentView(myHw.getContentView_activity_my());
-                            hideSoftKeyboard(myHw.getTitle());
+                            if (myHw.post(context).equals(true)) {
+                                myHw.post(context);
+                                setContentView(myHw.getContentView_activity_my());
+                                hideSoftKeyboard(myHw.getTitle());
+                            }
                         }
                     });
     }
@@ -59,5 +61,6 @@ public class MyActivity extends Activity
             imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
         }
     }
+
 
 }

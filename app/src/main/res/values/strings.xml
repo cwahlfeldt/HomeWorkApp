@@ -4,5 +4,9 @@
     <string name="app_name">HomeWorkApp</string>
     <string name="hello_world">Hello world!</string>
     <string name="action_settings">Settings</string>
+    <string name="hwDescription">Homework Description</string>
+    <string name="classTitle">Class Title</string>
+    <string name="plusHomework">+Homework</string>
+    <string name="create">Create</string>
 
 </resources>

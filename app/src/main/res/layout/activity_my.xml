@@ -18,7 +18,7 @@ android:id="@+id/mainRelLayout">
         android:paddingRight="50dp"
         android:paddingTop="10dp"
         android:paddingBottom="10dp"
-        android:hint="+Homework"
+        android:hint="@string/plusHomework"
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true" />
 

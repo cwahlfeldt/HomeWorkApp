@@ -3,12 +3,15 @@ package com.chriswahlfeldt.homeworkapp;
         import android.content.Context;
         import android.graphics.Color;
         import android.graphics.Typeface;
+        import android.view.Gravity;
         import android.view.LayoutInflater;
         import android.view.View;
         import android.view.ViewGroup;
         import android.widget.EditText;
         import android.widget.RelativeLayout;
         import android.widget.TextView;
+        import android.widget.Toast;
+
         import java.util.ArrayList;
         import java.util.List;
 
@@ -49,8 +52,9 @@ public class MyHomework {
 
     public void setDescriptionTxt(String thatString) { title.setText(thatString); }
 
-    // posts a new relative layout containing a txtview to the main layout on the activity_my.xml
-    public void post(Context myContext){
+    // posts a new relative layout containing a text view to the main layout on the activity_my.xml
+    // returns a boolean value
+    public Boolean post(Context myContext){
 
         // declares and sets vars specific to the post function
         TextView txt = new TextView(myContext);
@@ -58,32 +62,49 @@ public class MyHomework {
         List<RelativeLayout> postRelLayoutList = new ArrayList<RelativeLayout>();
         RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
 
+        // sets unique id to each post
         postRelLayout.setId(counter++);
 
+        // adds parameters to each post
         params.addRule(RelativeLayout.BELOW, counter);
         params.setMargins(15,20,15,20);
 
-        String titleStr = title.getText().toString();
-        String descriptionStr = description.getText().toString();
+        // if you don't put title in than you get a nice little toast telling you to put it in
+        if (!title.getText().toString().equals("")){
 
-        txt.setTextSize(20);
-        txt.setPadding(40,30,30,30);
-        txt.setTextColor(Color.WHITE);
+            String titleStr = title.getText().toString();
+            String descriptionStr = description.getText().toString();
 
-        txt.setText(titleStr + " // " + descriptionStr);
+            txt.setTextSize(20);
+            txt.setPadding(40, 30, 30, 30);
+            txt.setTextColor(Color.LTGRAY);
 
-        postRelLayout.addView(txt);
-        postRelLayoutList.add(postRelLayout);
+            txt.setText(titleStr + " | " + descriptionStr);
 
-        postRelLayout.setLayoutParams(params);
-        postRelLayout.setBackgroundColor(Color.argb(230,27,27,30));
+            postRelLayout.addView(txt);
+            postRelLayoutList.add(postRelLayout);
 
-        for (RelativeLayout aPostRelLayoutList : postRelLayoutList) {
+            postRelLayout.setLayoutParams(params);
+            postRelLayout.setBackgroundColor(Color.argb(230, 27, 27, 30));
 
-            mainRelLayout.addView(aPostRelLayoutList);
+            // adds a new post to a list array
+            for (RelativeLayout aPostRelLayoutList : postRelLayoutList) {
+
+                mainRelLayout.addView(aPostRelLayoutList);
+            }
+
+            title.setText("");
+            description.setText("");
+
+            return true;
         }
+        else{
+            // creates and shows a toast in middle of screen
+            Toast toast = Toast.makeText(myContext, "Please add a name for your class", Toast.LENGTH_SHORT);
+            toast.setGravity(Gravity.CENTER,0,-25);
+            toast.show();
 
-        title.setText("");
-        description.setText("");
+            return false;
+        }
     }
 }

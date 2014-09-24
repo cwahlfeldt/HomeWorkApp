@@ -59,4 +59,5 @@ public class MyActivity extends Activity
             imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
         }
     }
+
 }

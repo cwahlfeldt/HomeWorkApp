@@ -63,17 +63,20 @@ public class MyHomework {
         params.addRule(RelativeLayout.BELOW, counter);
         params.setMargins(15,20,15,20);
 
-        txt.setTextSize(20);
-        txt.setTypeface(null, (Typeface.BOLD));
-        txt.setPadding(40,30,30,30);
+        String titleStr = title.getText().toString();
+        String descriptionStr = description.getText().toString();
 
-        txt.setText(title.getText().toString() + " // " + description.getText().toString());
+        txt.setTextSize(20);
+        txt.setPadding(40,30,30,30);
+        txt.setTextColor(Color.WHITE);
+
+        txt.setText(titleStr + " // " + descriptionStr);
 
         postRelLayout.addView(txt);
         postRelLayoutList.add(postRelLayout);
 
         postRelLayout.setLayoutParams(params);
-        postRelLayout.setBackgroundColor(Color.GREEN);
+        postRelLayout.setBackgroundColor(Color.argb(230,27,27,30));
 
         for (RelativeLayout aPostRelLayoutList : postRelLayoutList) {
 

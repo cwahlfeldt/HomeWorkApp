@@ -1,31 +1,31 @@
 package com.chriswahlfeldt.homeworkapp;
 
-import android.content.Context;
-import android.graphics.Color;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
-import android.widget.EditText;
-import android.widget.RelativeLayout;
-import android.widget.TextView;
+        import android.content.Context;
+        import android.graphics.Color;
+        import android.view.LayoutInflater;
+        import android.view.View;
+        import android.view.ViewGroup;
+        import android.widget.EditText;
+        import android.widget.RelativeLayout;
+        import android.widget.TextView;
+        import java.util.ArrayList;
+        import java.util.List;
 
-import java.util.ArrayList;
-import java.util.List;
-
-public class MyHomework {
+public class MyHomework extends MyReminder{
 
     private EditText title, description;
     private View homeworkView, activityView;
     private RelativeLayout mainRelLayout;
     private int counter;
+    private Context context;
+    private MyReminder myReminder;
 
     // default "constructor"
-    public  MyHomework() {
-        //DO NOT CALL THIS EVER
+    public MyHomework(){
+        // DO NOT USE
     }
 
-    // 1 param constructor, getting the context of MyActivity.java
-    public MyHomework(Context myContext) {
+    public MyHomework(Context myContext){
 
         // sets inflater to the context of MyActivity.java
         LayoutInflater inflater = (LayoutInflater) myContext.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
@@ -40,14 +40,16 @@ public class MyHomework {
         description = (EditText) homeworkView.findViewById(R.id.descriptionET);
         title.setText("");
 
+        context = myContext;
     }
-
 
     public View getContentView_activity_my() { return activityView; }
 
     public View getContentView_add_homework() { return homeworkView; }
 
     public TextView getTitle() { return title; }
+
+    public Context getContext() { return context; }
 
     public String getDescriptionTxt() { return description.getText().toString(); }
 
@@ -72,20 +74,23 @@ public class MyHomework {
         params.addRule(RelativeLayout.BELOW, counter);
         params.setMargins(15,20,15,20);
 
-        String titleStr = title.getText().toString();
-        String descriptionStr = description.getText().toString();
+        // if you don't put title in than you get a nice little toast telling you to put it in
+//        if (!title.getText().toString().equals("")){
 
-        txt.setTextSize(20);
-        txt.setPadding(40, 30, 30, 30);
-        txt.setTextColor(Color.LTGRAY);
+            String titleStr = title.getText().toString();
+            String descriptionStr = description.getText().toString();
 
-        txt.setText(titleStr + " | " + descriptionStr);
+            txt.setTextSize(20);
+            txt.setPadding(40, 30, 30, 30);
+            txt.setTextColor(Color.LTGRAY);
 
-        postRelLayout.addView(txt);
-        postRelLayoutList.add(postRelLayout);
+            txt.setText(titleStr + " | " + descriptionStr);
 
-        postRelLayout.setLayoutParams(params);
-        postRelLayout.setBackgroundColor(Color.argb(230, 27, 27, 30));
+            postRelLayout.addView(txt);
+            postRelLayoutList.add(postRelLayout);
+
+            postRelLayout.setLayoutParams(params);
+            postRelLayout.setBackgroundColor(Color.argb(230, 27, 27, 30));
 
             // adds a new post to a list array
             for (RelativeLayout aPostRelLayoutList : postRelLayoutList) {
@@ -93,7 +98,18 @@ public class MyHomework {
                 mainRelLayout.addView(aPostRelLayoutList);
             }
 
-        title.setText("");
-        description.setText("");
+            title.setText("");
+            description.setText("");
+
+//            return true;
+//        }
+//        else{
+            // creates and shows a toast in middle of screen
+//            Toast toast = Toast.makeText(myContext, "Please add a name for your class", Toast.LENGTH_SHORT);
+//            toast.setGravity(Gravity.CENTER,0,-25);
+//            toast.show();
+//
+//          return false;
+//        }
     }
 }
